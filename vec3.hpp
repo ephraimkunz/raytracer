@@ -1,3 +1,6 @@
+#ifndef VEC3H
+#define VEC3H
+
 #include <math.h>
 #include <iostream>
 
@@ -131,3 +134,5 @@ vec3 cross(const vec3 &v1, const vec3 &v2) {
 vec3 unit_vector(vec3 v) { 
     return v / v.length();
 }
+
+#endif // VEC3H
