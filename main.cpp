@@ -10,8 +10,9 @@ using namespace std;
 
 vec3 color(const ray& r, hittable *world) {
     hit_record rec;
-    if (world->hit(r, 0.0, MAXFLOAT, rec)) {
-        return 0.5 * vec3(rec.normal.x()+1, rec.normal.y()+1, rec.normal.z()+1);
+    if (world->hit(r, 0.001, MAXFLOAT, rec)) {
+        vec3 target = rec.p + rec.normal + random_in_unit_sphere();
+        return 0.5 * color(ray(rec.p, target - rec.p), world);
     } else {
         vec3 unit_direction = unit_vector(r.direction());
         float t = 0.5*(unit_direction.y() + 1.0); // Move to [0, 1]
@@ -48,6 +49,7 @@ int main() {
             }
             
             col /= float(ns);
+            col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
             int ir = int(255.99 * col.r());
             int ig = int(255.99 * col.g());
             int ib = int(255.99 * col.b());
